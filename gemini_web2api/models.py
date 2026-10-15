@@ -4,6 +4,10 @@
 #   1=FAST, 2=THINKING, 3=PRO, 4=AUTO, 5=FAST_DYNAMIC_THINKING, 6=FLASH_LITE
 
 MODELS = {
+    "gemini-4-argon": {
+        "mode": 3, "think": 0,
+        "desc": "Gemini 4 Argon frontier reasoning model (requires cookie)",
+    },
     "gemini-3.7-flash": {
         "mode": 1, "think": 4,
         "desc": "Latest all-around model (Gemini 3.7 Flash)",

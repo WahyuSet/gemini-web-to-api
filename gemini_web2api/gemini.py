@@ -61,8 +61,9 @@ def load_cookie() -> tuple:
             cookie_str = data.get("cookie", "")
             sapisid = data.get("sapisid", "")
         else:
-            cookie_str = content
-            pairs = dict(p.split("=", 1) for p in cookie_str.split("; ") if "=" in p)
+            raw_parts = [p.strip().rstrip(";") for p in re.split(r"[;\n]+", content) if p.strip() and "=" in p]
+            cookie_str = "; ".join(raw_parts)
+            pairs = dict(p.split("=", 1) for p in raw_parts)
             sapisid = pairs.get("SAPISID", "")
         _cookie_cache.update({"str": cookie_str, "sapisid": sapisid or None, "mtime": mtime})
         return cookie_str, sapisid if sapisid else None

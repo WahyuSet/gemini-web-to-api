@@ -71,6 +71,10 @@ CONFIG = dict(DEFAULT_CONFIG)
 #   1=FAST, 2=THINKING, 3=PRO, 4=AUTO, 5=FAST_DYNAMIC_THINKING, 6=FLASH_LITE
 
 MODELS = {
+    "gemini-4-argon": {
+        "mode": 3, "think": 0,
+        "desc": "Gemini 4 Argon frontier reasoning model (requires cookie)",
+    },
     "gemini-3.7-flash": {
         "mode": 1, "think": 4,
         "desc": "Latest all-around model (Gemini 3.7 Flash)",
@@ -128,8 +132,9 @@ def load_cookie() -> tuple:
             cookie_str = data.get("cookie", "")
             sapisid = data.get("sapisid", "")
         else:
-            cookie_str = content
-            pairs = dict(p.split("=", 1) for p in cookie_str.split("; ") if "=" in p)
+            raw_parts = [p.strip().rstrip(";") for p in re.split(r"[;\n]+", content) if p.strip() and "=" in p]
+            cookie_str = "; ".join(raw_parts)
+            pairs = dict(p.split("=", 1) for p in raw_parts)
             sapisid = pairs.get("SAPISID", "")
         return cookie_str, sapisid if sapisid else None
     except Exception as e:

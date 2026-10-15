@@ -1,0 +1,16 @@
+[Unit]
+Description=Gemini Web to OpenAI API Service
+After=network.target
+
+[Service]
+Type=simple
+# User and WorkingDirectory will be set by deploy.sh or manually adjusted
+User=root
+WorkingDirectory=/opt/gemini-web-to-api
+ExecStart=/opt/gemini-web-to-api/.venv/bin/python gemini_web2api.py
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
